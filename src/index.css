@@ -122,3 +122,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .main-container {
+    @apply h-screen w-screen p-6;
+  }
+}

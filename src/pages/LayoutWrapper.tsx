@@ -1,10 +1,17 @@
-import { Outlet } from "react-router";
+import { PropsWithChildren } from "react";
 
-export default function LayoutWrapper() {
+import { AppNav } from "@/components/AppNav";
+
+type LayoutWrapperProps = PropsWithChildren;
+
+export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   return (
-    <div>
-      Layout Wrapper
-      <Outlet />
+    <div className="main-container">
+      <header>
+        <AppNav />
+      </header>
+
+      {children}
     </div>
   );
 }
