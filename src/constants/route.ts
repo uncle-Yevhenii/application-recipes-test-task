@@ -1,6 +1,6 @@
 export const ROUTES_PATH = {
   RECIPES_PAGE: "/",
-  RECIPE_DETAIL_PAGE: "/recipe-detail/:id",
+  RECIPE_DETAIL_PAGE: "/recipe-detail",
   SELECTED_RECIPES_PAGE: "/selected-recipes",
   NOT_FOUND_PAGE: "*",
 };

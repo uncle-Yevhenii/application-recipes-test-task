@@ -1,32 +1,30 @@
-// usePagination.ts
 import { useState, useMemo } from "react";
 
-/**
- * Хук для пагінації даних на клієнтській стороні
- */
-export function usePagination(data, itemsPerPage = 4) {
+import { FETCH_CONFIG } from "@/constants/fetch";
+import { FormattedData } from "@/types/types";
+
+const { ITEMS_PER_PAGE } = FETCH_CONFIG;
+
+export function usePagination(data: FormattedData) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Обчислюємо пагіновані дані
   const paginatedData = useMemo(() => {
     if (!data || !data.meals) return null;
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
 
     return {
       ...data,
       meals: data.meals.slice(startIndex, endIndex),
     };
-  }, [data, currentPage, itemsPerPage]);
+  }, [data, currentPage]);
 
-  // Обчислюємо загальну кількість сторінок
   const totalPages = useMemo(() => {
     if (!data || !data.meals) return 0;
-    return Math.ceil(data.meals.length / itemsPerPage);
-  }, [data, itemsPerPage]);
+    return Math.ceil(data.meals.length / ITEMS_PER_PAGE);
+  }, [data]);
 
-  // Функції для навігації
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
@@ -39,13 +37,12 @@ export function usePagination(data, itemsPerPage = 4) {
     }
   };
 
-  const goToPage = (page) => {
+  const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
   };
 
-  // Скидання пагінації до першої сторінки
   const resetPagination = () => {
     setCurrentPage(1);
   };

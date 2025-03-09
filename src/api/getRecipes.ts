@@ -1,24 +1,25 @@
+import { ApiResponse, FormattedData } from "@/types/types";
+
 import { httpClient } from "./httpClient";
+import { formatRecipeData } from "@/lib/formatRecipeData";
 
-/**
- * Функція для пошуку страв за назвою
- * @param search - Пошуковий запит
- * @returns Promise з даними відповіді
- */
-export const getRecipes = async (search = "") => {
+export const getRecipes = async (search = ""): Promise<FormattedData> => {
   const response = await httpClient.get(`/search.php?s=${search}`);
-  return response.data;
+
+  const data: ApiResponse = response.data;
+
+  const formattedData: FormattedData = formatRecipeData(data);
+  return formattedData;
 };
 
-/**
- * Функція для отримання детальної інформації про страву за ID
- * @param id - ID страви
- * @returns Promise з даними відповіді
- */
-export const getMealById = async (id) => {
+export const getMealById = async (
+  id: string
+): Promise<FormattedData | null> => {
   if (!id) return null;
-  const response = await httpClient.get(`/lookup.php?i=${id}`);
-  return response.data;
-};
 
-// Тут можна додати інші API функції
+  const response = await httpClient.get(`/lookup.php?i=${id}`);
+  const data: ApiResponse = response.data;
+
+  const formattedData: FormattedData = formatRecipeData(data);
+  return formattedData;
+};

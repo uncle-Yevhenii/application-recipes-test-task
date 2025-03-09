@@ -1,0 +1,5 @@
+export const FETCH_CONFIG = {
+  INITIAL_SEARCH: "",
+  DEBOUNCE_DELAY: 500,
+  ITEMS_PER_PAGE: 4,
+};

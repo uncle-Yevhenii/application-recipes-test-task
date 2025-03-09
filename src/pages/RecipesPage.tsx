@@ -1,25 +1,33 @@
-import { useSearchWithPagination } from "@/hooks/useSearchWithPagination";
+import { useEffect } from "react";
+
+import { useSearchWithDebounce } from "@/hooks/useSearchWithDebounce";
 import { PaginationRecipes } from "@/components/PaginationRecipes";
 import { FiendRecipes } from "@/components/FiendRecipes";
-import { MealsList } from "@/components/mealsList";
+import { usePagination } from "@/hooks/usePagination";
+import { MealsList } from "@/components/MealsList";
+import { getRecipes } from "@/api/getRecipes";
 
-const RecipeSearch = () => {
+export default function RecipesPage() {
+  const { data, loading, searchTerm, setSearchTerm } =
+    useSearchWithDebounce(getRecipes);
+
   const {
-    data,
-    loading,
-    error,
-    searchTerm,
+    paginatedData,
     currentPage,
     totalPages,
     goToNextPage,
     goToPrevPage,
     goToPage,
-    setSearchTerm,
-  } = useSearchWithPagination();
+    resetPagination,
+  } = usePagination(data || { meals: [] });
 
-  const handleSearchChange = (e) => {
+  useEffect(() => {
+    resetPagination();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchTerm(e.target.value);
-  };
 
   return (
     <div>
@@ -30,13 +38,11 @@ const RecipeSearch = () => {
         placeholder="Fiend recipes..."
       />
 
-      {loading && <div>Завантаження...</div>}
+      {loading && <div>Loading...</div>}
 
-      {error && <div>Помилка: {error.message}</div>}
-
-      {data && data.meals && (
+      {paginatedData && paginatedData.meals && (
         <div>
-          <MealsList list={data.meals} />
+          <MealsList list={paginatedData.meals} />
 
           <PaginationRecipes
             totalPages={totalPages}
@@ -48,9 +54,7 @@ const RecipeSearch = () => {
         </div>
       )}
 
-      {data && !data.meals && <div>Рецепти не знайдено</div>}
+      {paginatedData && !paginatedData.meals && <div>Not found recipes</div>}
     </div>
   );
-};
-
-export default RecipeSearch;
+}

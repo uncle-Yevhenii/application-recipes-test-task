@@ -27,7 +27,10 @@ export function App() {
         }
       >
         <Route index element={<RecipesPage />} />
-        <Route path={RECIPE_DETAIL_PAGE} element={<RecipeDetailPage />} />
+        <Route
+          path={`${RECIPE_DETAIL_PAGE}/:id`}
+          element={<RecipeDetailPage />}
+        />
         <Route path={SELECTED_RECIPES_PAGE} element={<SelectedRecipesPage />} />
 
         <Route path={NOT_FOUND_PAGE} element={<NotFoundPage />} />
