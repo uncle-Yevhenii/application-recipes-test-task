@@ -1,9 +1,21 @@
-import { Button } from "@/components/ui/button";
+import { Routes, Route } from "react-router";
+
+import SelectedRecipesPage from "@/pages/SelectedRecipesPage";
+import RecipeDetailPage from "@/pages/RecipeDetailPage";
+import LayoutWrapper from "@/pages/LayoutWrapper";
+import NotFoundPage from "@/pages/NotFoundPage";
+import RecipesPage from "@/pages/RecipesPage";
 
 export function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
+    <Routes>
+      <Route path="/" element={<LayoutWrapper />}>
+        <Route index element={<RecipesPage />} />
+        <Route path=":id" element={<RecipeDetailPage />} />
+        <Route path="/selected" element={<SelectedRecipesPage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
