@@ -43,7 +43,7 @@ export function MealsList({ list }: MealsListProps) {
               />
             </CardContent>
             <CardFooter>
-              <Button className="w-full">
+              <Button className="w-full" disabled>
                 <Heart /> Add to favorite
               </Button>
             </CardFooter>

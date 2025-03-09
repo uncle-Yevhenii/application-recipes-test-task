@@ -1,13 +1,21 @@
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import { Button } from "./ui/button";
 
+type PaginationRecipesProps = {
+  totalPages: number;
+  currentPage: number;
+  goToPrevPage: () => void;
+  goToNextPage: () => void;
+  goToPage: (page: number) => void;
+};
+
 export function PaginationRecipes({
   totalPages,
   goToPrevPage,
   currentPage,
   goToNextPage,
   goToPage,
-}) {
+}: PaginationRecipesProps) {
   return (
     <div className="m-auto">
       {totalPages > 1 && (

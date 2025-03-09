@@ -20,7 +20,7 @@ export default function RecipeDetailPage() {
   const { data, loading, error } = useSearchWithoutDebounce(getMealById, id);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Error: {(error as Error).message}</div>;
   if (!data || !data.meals || !data.meals[0]) return <div>Meal not found!</div>;
 
   const meal = data.meals[0];
